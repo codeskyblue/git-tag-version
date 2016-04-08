@@ -1,15 +1,22 @@
 chai = require 'chai'
+mlog = require 'mocha-logger'
 
-gitrev = require '../src'
+gitver = require '../src'
 
-describe 'gitrev', ->
+describe 'gitver', ->
 
   it 'should branch() == master', (done) ->
-    gitrev.branch (branch) ->
+    gitver.branch (branch) ->
       chai.expect(branch).to.equal('master')
       done()
 
   it 'should long() length 40', (done) ->
-    gitrev.long (sha) ->
+    gitver.long (sha) ->
       chai.expect(sha).have.length(40)
+      done()
+
+  it 'should get recent tag version', (done) ->
+    gitver.current (ver) ->
+      # chai.expect(ver)
+      mlog.log(ver)
       done()
