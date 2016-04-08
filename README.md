@@ -8,10 +8,12 @@ This is a Nodejs library.
 ```
 var gv = require('git-tag-version')
 
-gv.branch(function(branch){
-    console.log(branch) // expect: master
+gv.current(function(version){
+    console.log(version) // expect: 0.0.1
 })
 ```
+
+If recent `git tag` is v0.0.2, then function will return 0.0.2 or 0.0.3.dev
 
 ## LICENSE
 Under [MIT](LICENSE)

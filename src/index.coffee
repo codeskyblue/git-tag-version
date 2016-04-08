@@ -9,12 +9,8 @@ command = (cmd, cb) ->
 long = (cb) ->
   command 'git rev-parse HEAD', cb
 
-tags = (cb) ->
-  command 'git describe --abbrev=0 --tags', (output) ->
-    _tags = output.trim().split('\n')
-    if _tags.length == 1 and _tags[0] == ''
-      _tags = []
-    cb(_tags)
+tag = (cb) ->
+  command 'git describe --always --tag --abbrev=0', cb
 
 
 module.exports =
@@ -26,19 +22,20 @@ module.exports =
   tag: (cb) ->
     command 'git describe --always --tag --abbrev=0', cb
 
-
   current: (cb) ->
     clean_cb = (name) ->
       cb semver.clean(name)
 
     callback = (name) ->
       if name == "undefined"
-        tags (vers) ->
-          console.log(vers.sort(semver.rcompare))
-          if vers.length == 0
+        tag (name) ->
+          if name.length == 40
             clean_cb "0.0.1"
           else
-            clean_cb vers[vers.length - 1]
+            name = semver.clean(name)
+            ms = name.split('.')
+            ms[ms.length-1] = parseInt(ms[ms.length-1], 10) + 1 + ''
+            cb ms.join('.') + '.dev'
       else
         clean_cb name
 

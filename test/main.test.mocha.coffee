@@ -18,5 +18,5 @@ describe 'gitver', ->
   it 'should get recent tag version', (done) ->
     gitver.current (ver) ->
       # chai.expect(ver)
-      mlog.log(ver)
+      mlog.log("the grow version is:", ver)
       done()
