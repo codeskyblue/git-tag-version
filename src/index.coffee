@@ -34,13 +34,13 @@ module.exports =
     callback = (name) ->
       if name == "undefined"
         tags (vers) ->
-          console.log(vers.sort(semver.compare))
+          console.log(vers.sort(semver.rcompare))
           if vers.length == 0
-            cb "0.0.1"
+            clean_cb "0.0.1"
           else
-            cb vers[vers.length - 1]
+            clean_cb vers[vers.length - 1]
       else
-        cb name
+        clean_cb name
 
     long (sha) ->
       command "git name-rev --tags --name-only " + sha, callback
