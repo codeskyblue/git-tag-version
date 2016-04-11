@@ -5,6 +5,15 @@ This is a Nodejs library.
 
 ## Usage
 
+Command line
+
+```
+$ gitver version
+# expect output 0.0.1.dev
+```
+
+库的使用
+
 ```
 var gv = require('git-tag-version')
 

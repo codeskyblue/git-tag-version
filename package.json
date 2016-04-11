@@ -1,10 +1,13 @@
 {
   "name": "gitver",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate version number by git history inspired by python-pbr",
   "main": "index.js",
   "scripts": {
     "test": "gulp test"
+  },
+  "bin": {
+    "gitver": "./bin/cli.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +35,8 @@
     "mocha-logger": "^1.0.3"
   },
   "dependencies": {
+    "bluebird": "^3.3.4",
+    "commander": "^2.9.0",
     "semver": "^5.1.0"
   }
 }
