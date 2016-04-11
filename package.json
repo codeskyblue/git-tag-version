@@ -1,6 +1,6 @@
 {
   "name": "gitver",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generate version number by git history inspired by python-pbr",
   "main": "index.js",
   "scripts": {
