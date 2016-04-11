@@ -57,24 +57,31 @@ Gitver.prototype.current = (cb) ->
   that = this
   return this.tag().then (tagName) ->
     if tagName != "undefined"
-      that.tags().then (names) ->
-        return Promise.filter names, (name) ->
-          return semver.clean(name)
-      .then (names) ->
-        names = names.map (name) ->
-          return semver.clean name
-        return names.sort semver.rcompare
-      .then (names) ->
-        if names.length >= 1
-          parts = names[0].split('.')
-          lastNum = parseInt(parts[parts.length-1], 10) + 1
-          parts[parts.length-1] = '' + lastNum
-          return parts.join('.') + '.dev'
-        return '0.0.1.dev'
-      .then (verName) ->
-        if cb
-          cb verName
-        return verName
+      # FIXME: this should exclude none version name, like prerelease
+      verName = semver.clean tagName
+      if cb
+        cb verName
+      return verName
+
+    # Find the lastest tag name and return
+    return that.tags().then (names) ->
+      return Promise.filter names, (name) ->
+        return semver.clean(name)
+    .then (names) ->
+      names = names.map (name) ->
+        return semver.clean name
+      return names.sort semver.rcompare
+    .then (names) ->
+      if names.length >= 1
+        parts = names[0].split('.')
+        lastNum = parseInt(parts[parts.length-1], 10) + 1
+        parts[parts.length-1] = '' + lastNum
+        return parts.join('.') + '.dev'
+      return '0.0.1.dev'
+    .then (verName) ->
+      if cb
+        cb verName
+      return verName
 
 
 module.exports = new Gitver()
